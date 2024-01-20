@@ -1,0 +1,152 @@
+Vectors are the same as dynamic arrays with the ability to resize itself automatically when an element is inserted or deleted, with their storage being handled automatically by the container. Vector elements are placed in contiguous storage so that they can be accessed and traversed using iterators. In vectors, data is inserted at the end. Inserting at the end takes differential time, as sometimes the array may need to be extended. Removing the last element takes only constant time because no resizing happens. Inserting and erasing at the beginning or in the middle is linear in time.
+
+What is std::vector in C++?
+std::vector in C++ is the class template that contains the vector container and its member functions. It is defined inside the <vector> header file. The member functions of std::vector class provide various functionalities to vector containers. Some commonly used member functions are written below:
+
+Iterators
+begin() – Returns an iterator pointing to the first element in the vector
+end() – Returns an iterator pointing to the theoretical element that follows the last element in the vector
+rbegin() – Returns a reverse iterator pointing to the last element in the vector (reverse beginning). It moves from last to first element
+rend() – Returns a reverse iterator pointing to the theoretical element preceding the first element in the vector (considered as reverse end)
+cbegin() – Returns a constant iterator pointing to the first element in the vector.
+cend() – Returns a constant iterator pointing to the theoretical element that follows the last element in the vector.
+crbegin() – Returns a constant reverse iterator pointing to the last element in the vector (reverse beginning). It moves from last to first element
+crend() – Returns a constant reverse iterator pointing to the theoretical element preceding the first element in the vector (considered as reverse end)
+
+// C++ program to illustrate the
+// iterators in vector
+#include <iostream>
+#include <vector>
+ 
+using namespace std;
+ 
+int main()
+{
+    vector<int> g1;
+ 
+    for (int i = 1; i <= 5; i++)
+        g1.push_back(i);
+ 
+    cout << "Output of begin and end: ";
+    for (auto i = g1.begin(); i != g1.end(); ++i)
+        cout << *i << " ";
+ 
+    cout << "\nOutput of cbegin and cend: ";
+    for (auto i = g1.cbegin(); i != g1.cend(); ++i)
+        cout << *i << " ";
+ 
+    cout << "\nOutput of rbegin and rend: ";
+    for (auto ir = g1.rbegin(); ir != g1.rend(); ++ir)
+        cout << *ir << " ";
+ 
+    cout << "\nOutput of crbegin and crend : ";
+    for (auto ir = g1.crbegin(); ir != g1.crend(); ++ir)
+        cout << *ir << " ";
+ 
+    return 0;
+}
+
+Question #1: Which of the C++ loops is a pretest loop? While and For
+
+Question #2: Which of the C++ loops is a posttest loop? Do while
+
+Question #3: Which of the C++ loops provide both zero and one-trip behavior? Do while
+
+Question #4: Which of the C++ loops is best for counting? For and while
+
+Question #5: The ____________ statement allows you exit a loop in the middle. Break
+
+
+
+Write a while loop that repeats while i is less than j. Use an empty compound statement as the body of the loop.
+
+#include <iostream>
+
+int main() {
+    int i = 0;
+    int j = 5;
+
+    while (i < j) {
+        // Empty compound statement
+        // No code here
+
+        // Increment i to eventually exit the loop
+        ++i;
+    }
+
+    std::cout << "Loop exited." << std::endl;
+
+    return 0;
+}
+
+Write a do loop that repeats while i is less than j. Use an empty compound statement as the body of the loop
+
+#include <iostream>
+
+int main() {
+    int i = 0;
+    int j = 5;
+
+    do {
+        // Empty compound statement
+        // No code here
+
+        // Increment i to eventually exit the loop
+        ++i;
+    } while (i < j);
+
+    std::cout << "Loop exited." << std::endl;
+
+    return 0;
+}
+
+
+Write a counting for loop that counts from 4 to 55. Use an empty compound statement as the body of the loop.
+
+#include <iostream>
+
+int main() {
+    for (int i = 4; i <= 55; ++i) {
+        // Empty compound statement
+        // No code here
+
+        // You can include additional code if needed
+
+        // The loop will iterate from 4 to 55
+    }
+
+    std::cout << "Loop completed." << std::endl;
+
+    return 0;
+}
+
+
+Write an if-break statement that breaks when i is less than j.
+
+#include <iostream>
+
+int main() {
+    int i = 0;
+    int j = 5;
+
+    while (true) {
+        // Your code within the loop
+
+        // Check the condition
+        if (i < j) {
+            // Break the loop when i is less than j
+            break;
+        }
+
+        // Increment i or perform other actions within the loop
+
+        ++i;
+    }
+
+    std::cout << "Loop exited." << std::endl;
+
+    return 0;
+}
+
+
+

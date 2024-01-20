@@ -1,0 +1,50 @@
+Vector
+Vectors are sequence containers representing arrays that can change in size.
+
+Just like arrays, vectors use contiguous storage locations for their elements, which means that their elements can also be accessed using offsets on regular pointers to its elements, and just as efficiently as in arrays. But unlike arrays, their size can change dynamically, with their storage being handled automatically by the container.
+
+Internally, vectors use a dynamically allocated array to store their elements. This array may need to be reallocated in order to grow in size when new elements are inserted, which implies allocating a new array and moving all elements to it. This is a relatively expensive task in terms of processing time, and thus, vectors do not reallocate each time an element is added to the container.
+
+Instead, vector containers may allocate some extra storage to accommodate for possible growth, and thus the container may have an actual capacity greater than the storage strictly needed to contain its elements (i.e., its size). Libraries can implement different strategies for growth to balance between memory usage and reallocations, but in any case, reallocations should only happen at logarithmically growing intervals of size so that the insertion of individual elements at the end of the vector can be provided with amortized constant time complexity (see push_back).
+
+Therefore, compared to arrays, vectors consume more memory in exchange for the ability to manage storage and grow dynamically in an efficient way.
+
+Compared to the other dynamic sequence containers (deques, lists and forward_lists), vectors are very efficient accessing its elements (just like arrays) and relatively efficient adding or removing elements from its end. For operations that involve inserting or removing elements at positions other than the end, they perform worse than the others, and have less consistent iterators and references than lists and forward_lists.
+
+
+
+
+
+
+Question #1: The name of a file is represented by the ____________ data type; a connection to a file is represented by a ____________ data type. STRING - FSTREAM
+
+Question #2: The ____________ class is used for a connection to an input file; the ____________ class is used for a connection to an output file. IFSTREAM - OFSTREAM
+
+Question #3: What should a program do immediately after opening a connection to a file? CHECKS ERRORS, PROGRAM CHECKS WHETHER THE FILE WAS SUCCESSFULLY OPENED.
+
+Question #4: What should a program do when finished using a connection to a file? THE PROGRAM ENSURES SUCCESSFULL CLOSURE WHEN THE FILE OBJECTGOES OUT THE SCOPE.
+
+Question #5: Learning about file input and output is made easier because it's so similar to what?
+
+
+Code #1: Write a statement that opens input as a input connection to the file named in filename.
+
+ifstream inputFile(fileName);
+
+Code #2: Write a statement that opens output as an output connection to the file named in filename.
+
+ofstream outputFile(outputFile);
+
+Code #3: Using assert(), write a statement that tests if input was opened correctly.
+
+ifstream inputFile(fileName);
+assert(inputFile.is_opened() && "Error");
+inputFile.close();
+
+Code #4: Write the statement that reads a value from input into i.
+
+inputFile >> i;
+
+Code #5: Write a statement that closes the output connection.
+
+outputFile.close();

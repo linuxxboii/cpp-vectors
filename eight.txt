@@ -1,0 +1,104 @@
+Question #1: A(n) ____________ parameter receives a copy of the corresponding argument; a(n) ____________ parameter receives a reference to the corresponding argument. VALUE - REFERENCE
+
+Question #2: An ampersand & is used to designate a(n) ____________ parameter. REFERENCE
+
+Question #3: The ____________ of a particular variable is the section of code where that variable is defined. SCOPE
+
+Question #4: ____________ scope is limited by the curly braces of a compound statement. BLOCK
+
+Question #5: ____________ scope extends all the way to the end of the source file. GLOBAL
+
+
+
+
+
+Code #1: Write a prototype for the function foo() that has a return type of void, an int value parameter frodo, and an int reference parameter samwise.
+
+#include <iostream>
+
+void foo(int frodo, int &samwise);
+
+
+Code #2: Write a function stub for the function foo() as described in the previous question.
+
+#include <iostream>
+
+void foo(int frodo, int &samwise) {
+    // Function body (implementation) will go here
+
+    // For now, let's print the values of frodo and samwise
+    std::cout << "frodo: " << frodo << std::endl;
+    std::cout << "samwise (before modification): " << samwise << std::endl;
+
+    // Modify the value of samwise (for example, doubling it)
+    samwise *= 2;
+
+    std::cout << "samwise (after modification): " << samwise << std::endl;
+}
+
+
+Code #3: Write a declaration for a string variable named gandalf as a local variable. Indicate the context of the declaration to demonstrate that it is, in fact, a local variable.
+
+#include <iostream>
+#include <string>
+
+void someFunction() {
+    // Declaration of a local string variable named gandalf
+    std::string gandalf = "You shall not pass!";
+
+    // Additional code using the gandalf variable
+    std::cout << "Gandalf says: " << gandalf << std::endl;
+}
+
+int main() {
+    // Call the function where gandalf is declared
+    someFunction();
+
+    // The gandalf variable is not accessible outside the someFunction scope
+
+    return 0;
+}
+
+
+Code #4: Write a declaration for a string variable named balrog as a non-local variable (visible through most of the code file). Indicate the context of the declaration to demonstrate that it is, in fact, an extern variable.
+
+#include <iostream>
+#include <string>
+
+void someFunction() {
+    // Declaration of a local string variable named gandalf
+    std::string gandalf = "You shall not pass!";
+
+    // Additional code using the gandalf variable
+    std::cout << "Gandalf says: " << gandalf << std::endl;
+}
+
+// Declaration of a non-local (extern) string variable named balrog
+extern std::string balrog;
+
+int main() {
+    // Call the function where gandalf is declared
+    someFunction();
+
+    // Use the non-local (extern) variable balrog
+    std::cout << "The Balrog says: " << balrog << std::endl;
+
+    return 0;
+}
+
+// Definition of the non-local (extern) variable balrog
+std::string balrog = "You shall not pass either!";
+
+
+Code #5: Write a declaration for a string variable named int. Why won't the C++ compiler like this?
+
+Attempting to declare a variable with the name int in C++ is not allowed because int is a keyword in the C++ language. Keywords are reserved words that have special meanings in the language, and they cannot be used as identifiers (such as variable names).
+
+#include <iostream>
+#include <string>
+
+int main() {
+    std::string int = "This won't work!";
+    std::cout << int << std::endl;
+    return 0;
+}
