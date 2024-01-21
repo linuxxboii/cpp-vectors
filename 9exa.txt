@@ -1,11 +1,11 @@
-When many of us were younger, we enjoyed writing secret messages, in which messages were encoded in such a way as to prevent others from reading them, unless they were in possession of a secret that enabled them to decode the message. Coded messages of this sort have a long history. For example, the Caesar cipher (invented, it is said, by Julius Caesar himself) is a simple way to encoding messages.
+When many of us were younger, we enjoyed writing secret messages, in which messages were encoded in such a way as to prevent others from reading them, unless they were in possession of a secret that enabled them to decode the message. Coded messages of this sort have a long history. For example, ----the Caesar cipher (invented, it is said, by Julius Caesar himself) is a simple way to encoding messages.
 
 
-Opening a Connection to a File. When we want to get input from a file, we have tell the compiler that's what we want. It's a fairly expensive operation (since data moves much slower to and from a disk than to and from a computer's main memory). We also have to be precise about what file we want. We certainly don't want all files on the machine.
+---Opening a Connection to a File. When we want to get input from a file, we have tell the compiler that's what we want. It's a fairly expensive operation (since data moves much slower to and from a disk than to and from a computer's main memory). We also have to be precise about what file we want. We certainly don't want all files on the machine.
 
-So we need to open a connection between the program and a file. A connection is a thing, and all things in C++ are represented as objects. File connections are known as streams, and there are two types of streams: ifstream for input file streams and ofstream for output file streams.
+So we need to open a connection between the program and a file. A connection is a thing, and all things in C++ are represented as objects. File connections are known as ----streams, and there are two types of streams: ifstream for input file streams and ofstream for output file streams.
 
-Checking that a Connection Opened Correctly. Opening files is an operation that is highly susceptible to user errors. Suppose the user has accidentally deleted the input file and our program tries to open a connection to it? What if it never existed in the first place! If an fstream opens as expected, the operation is said to succeed, but if it does not open as expected, the operation is said to fail.
+---Checking that a Connection Opened Correctly. Opening files is an operation that is highly susceptible to user errors. Suppose the user has accidentally deleted the input file and our program tries to open a connection to it? What if it never existed in the first place! If an fstream opens as expected, the operation is said to --succeed, but if it does not open as expected, the operation is said to ---fail.
 
 To detect the success of an open operation, fstream objects contain an is_open() method:
 
@@ -20,7 +20,7 @@ Input from an ifstream. The most important thing about input (and output) is tha
 Helpful hint: File I/O is done the same way a screen and keyboard I/O.
 
 
-Just as we have used the >> operator is used to read data from the istream named cin, the >> operator can be used to read data from an ifstream opened for input. Since the ifstream connects a file to a program, applying >> to it transfers data from the file to the program. For this reason, this operation is described as reading from a file, even though we are actually operating on the ifstream. An expression of the form:
+Just as we have used the >> operator is used to read data from the istream named cin, the >> operator can be used to read data from an ifstream opened for input. Since the ifstream connects a file to a program, applying >> to it transfers data from the file to the program. For this reason, this operation is described as ----reading from a file, even though we are actually operating on the ifstream. An expression of the form:
 
 inputFileStream >> VariableName
 
@@ -37,7 +37,7 @@ if ( /* end-of-file has been reached */ ) break;
 following the input step, repetition will be terminated when all of the data in the file has been processed.
 In your source program, place an if-break in the appropriate place in our algorithm, using the eof() method of inStream as the condition in the if statement. Then compile your source program, to check the syntax of what you have written. When it is syntactically correct, continue to the next part of the exercise. You probably could run the program now, but it won't do anything interesting because it's not generating any output.
 
-File Output. Just as we have used the << operator to write data to the ostream named cout, the << operator can be used to write data to an ofstream opened for output. Since the ofstream connects a program to a file, applying << to it transfers data from the program to the file. This operation is thus described as writing to the file, even though it is an ofstream operation.
+File Output. Just as we have used the << operator to write data to the ostream named cout, the << operator can be used to ----write data to an ofstream opened for output. Since the ofstream connects a program to a file, applying << to it transfers data from the program to the file. This operation is thus described as ----writing to the file, even though it is an ofstream operation.
 
 The pattern for output should look pretty familiar:
 
@@ -45,7 +45,7 @@ outputFileStream << Value ;
 outputFileStream is an ofstream, and Value is value that should be written in the file.
 Use this example as a basis for a statement to finish up the loop, writing the encoded character (not the original!) to the output file. Compile your program to test the syntax of what you have written, and fix all of your compilation errors.
 
-Closing Files. Once we are done using an stream to read from or write to a file, we should close it, to break the connection between our program and the file. This is accomplished using the method close(). Both the ifstream and ofstream classes have this method:
+Closing Files. Once we are done using an stream to read from or write to a file, we should ---close it, to break the connection between our program and the file. This is accomplished using the method close(). Both the ifstream and ofstream classes have this method:
 
 fileStream.close();
 When execution reaches this statement, the program severs its connection to fileStream.
