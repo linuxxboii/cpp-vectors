@@ -1,0 +1,96 @@
+(1) default constructor
+Constructs an ifstream object that is not associated with any file.
+Internally, its istream base constructor is passed a pointer to a newly constructed filebuf object (the internal file stream buffer).
+(2) initialization constructor
+Constructs an ifstream object, initially associated with the file identified by its first argument (filename), open with the mode specified by mode.
+Internally, its istream base constructor is passed a pointer to a newly constructed filebuf object (the internal file stream buffer). Then, filebuf::open is called with filename and mode as arguments.
+If the file cannot be opened, the stream's failbit flag is set.
+(3) copy constructor (deleted)
+Deleted (no copy constructor).
+(4) move constructor
+Acquires the contents of x.
+First, the function move-constructs both its base istream class from x and a filebuf object from x's internal filebuf object, and then associates them by calling member set_rdbuf.
+x is left in an unspecified but valid state.
+The internal filebuf object has at least the same duration as the ifstream object.
+
+
+Parameters
+filename
+A string representing the name of the file to open.
+Specifics about its format and validity depend on the library implementation and running environment.
+mode
+Flags describing the requested i/o mode for the file.
+This is an object of the bitmask member type openmode that consists of a combination of the following member constants:
+member constant	stands for	access
+in *	input	File open for reading: the internal stream buffer supports input operations.
+out	output	File open for writing: the internal stream buffer supports output operations.
+binary	binary	Operations are performed in binary mode rather than text.
+ate	at end	The output position starts at the end of the file.
+app	append	All output operations happen at the end of the file, appending to its existing contents.
+trunc	truncate	Any contents that existed in the file before it is open are discarded.
+These flags can be combined with the bitwise OR operator (|).
+* in is always set for ifstream objects (even if explicitly not set in argument mode).
+Note that even though ifstream is an input stream, its internal filebuf object may be set to also support output operations.
+
+C++98C++11
+If the mode has app set, the opening operation fails. It also fails if trunc is set but out is not.
+x
+A ifstream object of the same type (with the same class template parameters charT and traits), whose value is moved.
+
+Example
+
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <fstream>
+#include <iterator>
+
+double computeMedian(const std::vector<double>& seq) {
+    std::vector<double> sortedSeq = seq;  // Copy the sequence to avoid modifying the original
+    std::sort(sortedSeq.begin(), sortedSeq.end());
+
+    size_t n = sortedSeq.size();
+
+    if (n % 2 != 0) {
+        // If the size is odd, return the middle value
+        return sortedSeq[n / 2];
+    } else {
+        // If the size is even, return the average of the two middle values
+        size_t middle1 = n / 2 - 1;
+        size_t middle2 = n / 2;
+        return (sortedSeq[middle1] + sortedSeq[middle2]) / 2.0;
+    }
+}
+
+int main() {
+    std::string filename;
+    std::cout << "Enter the name of the file containing the sequence of numbers: ";
+    std::cin >> filename;
+
+    std::ifstream inputFile(filename);
+    if (!inputFile) {
+        std::cerr << "Error opening file " << filename << std::endl;
+        return 1;  // Return error code
+    }
+
+    std::vector<double> numbers;
+    double number;
+
+    // Read numbers from the file into the vector
+    while (inputFile >> number) {
+        numbers.push_back(number);
+    }
+
+    // Check if any numbers were read
+    if (numbers.empty()) {
+        std::cerr << "No numbers found in the file." << std::endl;
+        return 1;  // Return error code
+    }
+
+    // Compute and display the median
+    double median = computeMedian(numbers);
+    std::cout << "The median of the sequence is: " << median << std::endl;
+
+    return 0;  // Return success code
+}
