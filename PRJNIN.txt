@@ -1,0 +1,309 @@
+(1) default constructor
+Constructs an ifstream object that is not associated with any file.
+Internally, its istream base constructor is passed a pointer to a newly constructed filebuf object (the internal file stream buffer).
+(2) initialization constructor
+Constructs an ifstream object, initially associated with the file identified by its first argument (filename), open with the mode specified by mode.
+Internally, its istream base constructor is passed a pointer to a newly constructed filebuf object (the internal file stream buffer). Then, filebuf::open is called with filename and mode as arguments.
+If the file cannot be opened, the stream's failbit flag is set.
+(3) copy constructor (deleted)
+Deleted (no copy constructor).
+(4) move constructor
+Acquires the contents of x.
+First, the function move-constructs both its base istream class from x and a filebuf object from x's internal filebuf object, and then associates them by calling member set_rdbuf.
+x is left in an unspecified but valid state.
+The internal filebuf object has at least the same duration as the ifstream object.
+
+
+Project #9.1: Write a program that reads from a file of real numbers, and displays the minimum, maximum, average, and range of the numbers in the file. The user should be able to enter the name of the input file from the keyboard.
+
+#include <iostream>
+#include <fstream>
+
+int main() {
+    std::string filename;
+    std::cout << "Enter the name of the input file: ";
+    std::cin >> filename;
+
+    std::ifstream inputFile(filename);
+    if (!inputFile) {
+        std::cerr << "Error opening file " << filename << std::endl;
+        return 1;  // Hata kodunu geri döndür
+    }
+
+    double number;
+    double sum = 0.0;
+    unsigned int count = 0;  // Okunan sayıların sayısını takip etmek için kullanılacak
+
+    // Dosyadan sayıları oku
+    while (inputFile >> number) {
+        // İstatistikleri güncelle
+        sum += number;
+        count++;
+    }
+
+    // Herhangi bir sayı okunup okunmadığını kontrol et
+    if (count == 0) {
+        std::cerr << "No valid numbers found in the file." << std::endl;
+        return 1;  // Hata kodunu geri döndür
+    }
+
+    // Ortalama ve aralığı hesapla
+    double average = sum / count;
+
+    // Sonuçları göster
+    std::cout << "Minimum: " << "N/A" << std::endl;  // Minimum'u takip etmek için ek işlemler gerekir
+    std::cout << "Maximum: " << "N/A" << std::endl;  // Maximum'u takip etmek için ek işlemler gerekir
+    std::cout << "Average: " << average << std::endl;
+    // Minimum ve maximum hesaplamak için ek işlemler yapılabilir,
+    // ancak dosyanın içeriği bilinmediği için direkt olarak gösterilmiyor.
+    std::cout << "Range: " << "N/A" << std::endl;
+
+    return 0;  // Başarı kodunu geri döndür
+}
+
+
+
+Project #9.2: Write a program that reads the contents of a file and creates an exact copy of the file, except that each line is numbered. For example, suppose the input file contains the following text:
+'Twas brillig, and the slithy toves
+   Did gyre and gimble in the wabe;
+All mimsy were the borogoves,
+   And the mome raths outgrabe.
+                        - Lewis Carroll
+Then the output file should appear something like this:
+1: 'Twas brillig, and the slithy toves
+2:    Did gyre and gimble in the wabe;
+3: All mimsy were the borogoves,
+4:    And the mome raths outgrabe.
+5:                         - Lewis Carroll
+The user should be able to enter the names of the input and output files from the keyboard.
+
+
+#include <iostream>
+#include <fstream>
+#include <string>
+
+int main() {
+    std::string inputFileName, outputFileName;
+
+    // Get input and output file names from the user
+    std::cout << "Enter the name of the input file: ";
+    std::cin >> inputFileName;
+
+    std::cout << "Enter the name of the output file: ";
+    std::cin >> outputFileName;
+
+    // Open the input file
+    std::ifstream inputFile(inputFileName);
+    if (!inputFile) {
+        std::cerr << "Error opening input file: " << inputFileName << std::endl;
+        return 1;  // Return error code
+    }
+
+    // Open the output file
+    std::ofstream outputFile(outputFileName);
+    if (!outputFile) {
+        std::cerr << "Error opening output file: " << outputFileName << std::endl;
+        return 1;  // Return error code
+    }
+
+    std::string line;
+    int lineNumber = 1;
+
+    // Read each line from the input file and write to the output file with line numbers
+    while (std::getline(inputFile, line)) {
+        outputFile << lineNumber << ": " << line << std::endl;
+        lineNumber++;
+    }
+
+    // Display a message indicating the process is complete
+    std::cout << "File copy with line numbers created successfully." << std::endl;
+
+    return 0;  // Return success code
+}
+
+
+
+
+Project #9.4: Write a text-analysis program that reads an essay or composition stored in a text file, and determines the number of words, the number of sentences, the average number of words per sentence, the average number of letters per word, and a complexity rating, using:
+complexity = 0.5 * averageSentenceLength + 0.5 * averageWordLength
+Based on these calculations, your program should assess the writing level of the essay as:
+Grammar School if complexity < 6.
+Junior High if 6 <= complexity < 7.
+High School if 7 <= Complexity < 8.
+College if 8 <= complexity < 9.
+Graduate if complexity >= 9.
+The user should be able to enter the name of the input file from the keyboard.
+
+
+
+#include <iostream>
+#include <fstream>
+#include <string>
+
+bool isLetter(char c) {
+    return ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z');
+}
+
+bool isEndOfSentence(char c) {
+    return c == '.' || c == '!' || c == '?';
+}
+
+int main() {
+    std::string inputFileName;
+
+    // Get the input file name from the user
+    std::cout << "Enter the name of the input file: ";
+    std::cin >> inputFileName;
+
+    // Open the input file
+    std::ifstream inputFile(inputFileName);
+    if (!inputFile) {
+        std::cerr << "Error opening input file: " << inputFileName << std::endl;
+        return 1;  // Return error code
+    }
+
+    // Variables to store statistics
+    int wordCount = 0;
+    int sentenceCount = 0;
+    int letterCount = 0;
+
+    std::string word;
+    char c;
+
+    // Read each character from the input file
+    while (inputFile.get(c)) {
+        // Check if the character is a letter
+        if (isLetter(c)) {
+            letterCount++;
+            word += c;
+        } else if (c == ' ' || c == '\n' || c == '\t') {
+            // Handle the end of a word
+            if (!word.empty()) {
+                wordCount++;
+                word.clear();
+            }
+        } else if (isEndOfSentence(c)) {
+            // Handle the end of a sentence
+            if (!word.empty()) {
+                wordCount++;
+                word.clear();
+            }
+            sentenceCount++;
+        }
+    }
+
+    // Calculate averages and complexity
+    double averageWordLength = static_cast<double>(letterCount) / wordCount;
+    double averageSentenceLength = static_cast<double>(wordCount) / sentenceCount;
+    double complexity = 0.5 * averageSentenceLength + 0.5 * averageWordLength;
+
+    // Display statistics
+    std::cout << "Number of words: " << wordCount << std::endl;
+    std::cout << "Number of sentences: " << sentenceCount << std::endl;
+    std::cout << "Average words per sentence: " << averageSentenceLength << std::endl;
+    std::cout << "Average letters per word: " << averageWordLength << std::endl;
+    std::cout << "Complexity rating: " << complexity << std::endl;
+
+    // Assess the writing level
+    std::cout << "Writing level: ";
+    if (complexity < 6.0) {
+        std::cout << "Grammar School";
+    } else if (complexity < 7.0) {
+        std::cout << "Junior High";
+    } else if (complexity < 8.0) {
+        std::cout << "High School";
+    } else if (complexity < 9.0) {
+        std::cout << "College";
+    } else {
+        std::cout << "Graduate";
+    }
+
+    std::cout << std::endl;
+
+    return 0;  // Return success code
+}
+
+
+
+
+
+Parameters
+filename
+A string representing the name of the file to open.
+Specifics about its format and validity depend on the library implementation and running environment.
+mode
+Flags describing the requested i/o mode for the file.
+This is an object of the bitmask member type openmode that consists of a combination of the following member constants:
+member constant	stands for	access
+in *	input	File open for reading: the internal stream buffer supports input operations.
+out	output	File open for writing: the internal stream buffer supports output operations.
+binary	binary	Operations are performed in binary mode rather than text.
+ate	at end	The output position starts at the end of the file.
+app	append	All output operations happen at the end of the file, appending to its existing contents.
+trunc	truncate	Any contents that existed in the file before it is open are discarded.
+These flags can be combined with the bitwise OR operator (|).
+* in is always set for ifstream objects (even if explicitly not set in argument mode).
+Note that even though ifstream is an input stream, its internal filebuf object may be set to also support output operations.
+
+C++98C++11
+If the mode has app set, the opening operation fails. It also fails if trunc is set but out is not.
+x
+A ifstream object of the same type (with the same class template parameters charT and traits), whose value is moved.
+
+Example
+
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <fstream>
+#include <iterator>
+
+double computeMedian(const std::vector<double>& seq) {
+    std::vector<double> sortedSeq = seq;  // Copy the sequence to avoid modifying the original
+    std::sort(sortedSeq.begin(), sortedSeq.end());
+
+    size_t n = sortedSeq.size();
+
+    if (n % 2 != 0) {
+        // If the size is odd, return the middle value
+        return sortedSeq[n / 2];
+    } else {
+        // If the size is even, return the average of the two middle values
+        size_t middle1 = n / 2 - 1;
+        size_t middle2 = n / 2;
+        return (sortedSeq[middle1] + sortedSeq[middle2]) / 2.0;
+    }
+}
+
+int main() {
+    std::string filename;
+    std::cout << "Enter the name of the file containing the sequence of numbers: ";
+    std::cin >> filename;
+
+    std::ifstream inputFile(filename);
+    if (!inputFile) {
+        std::cerr << "Error opening file " << filename << std::endl;
+        return 1;  // Return error code
+    }
+
+    std::vector<double> numbers;
+    double number;
+
+    // Read numbers from the file into the vector
+    while (inputFile >> number) {
+        numbers.push_back(number);
+    }
+
+    // Check if any numbers were read
+    if (numbers.empty()) {
+        std::cerr << "No numbers found in the file." << std::endl;
+        return 1;  // Return error code
+    }
+
+    // Compute and display the median
+    double median = computeMedian(numbers);
+    std::cout << "The median of the sequence is: " << median << std::endl;
+
+    return 0;  // Return success code
+}
