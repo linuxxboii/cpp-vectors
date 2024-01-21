@@ -1,0 +1,253 @@
+Vector
+Vectors are sequence containers representing arrays that can change in size.
+
+Just like arrays, vectors use contiguous storage locations for their elements, which means that their elements can also be accessed using offsets on regular pointers to its elements, and just as efficiently as in arrays. But unlike arrays, their size can change dynamically, with their storage being handled automatically by the container.
+
+Internally, vectors use a dynamically allocated array to store their elements. This array may need to be reallocated in order to grow in size when new elements are inserted, which implies allocating a new array and moving all elements to it. This is a relatively expensive task in terms of processing time, and thus, vectors do not reallocate each time an element is added to the container.
+
+EXAMPLE 2 Project #8.1: White water rapids are classified by their gradient (the number of feet per mile they descend) and their class (a difficulty rating in the range 1-6, with 1 being calm and 6 being unnavigable.) Popular white water rafting trips in Pennsylvania and West Virginia include the lower Youghiogheny (gradient 15, class 3), the New (gradient 25, class 4), the Cheat (gradient 35, class 4), and the Upper Youghiogheny (gradient 125, class 5).
+
+#include <iostream>
+#include <string>
+
+// Function to get the gradient and class of a selected trip
+void getTripDetails(const std::string& trip, int& gradient, int& raftClass) {
+    if (trip == "Lower Youghiogheny") {
+        gradient = 15;
+        raftClass = 3;
+    } else if (trip == "New") {
+        gradient = 25;
+        raftClass = 4;
+    } else if (trip == "Cheat") {
+        gradient = 35;
+        raftClass = 4;
+    } else if (trip == "Upper Youghiogheny") {
+        gradient = 125;
+        raftClass = 5;
+    } else {
+        std::cerr << "Error: Invalid trip selection." << std::endl;
+        gradient = raftClass = -1;  // Indicate an error
+    }
+}
+
+int main() {
+    std::string trip;
+    int gradient, raftClass;
+
+    while (true) {
+        // Display menu
+        std::cout << "\nWhite Water Rafting Trips Menu:" << std::endl;
+        std::cout << "1. Lower Youghiogheny" << std::endl;
+        std::cout << "2. New" << std::endl;
+        std::cout << "3. Cheat" << std::endl;
+        std::cout << "4. Upper Youghiogheny" << std::endl;
+        std::cout << "5. Exit" << std::endl;
+
+        // Get user input
+        std::cout << "Enter the number of the trip (1-4) or 5 to exit: ";
+        int choice;
+        std::cin >> choice;
+
+        // Exit if the user chooses to exit
+        if (choice == 5) {
+            break;
+        }
+
+        // Get details for the selected trip
+        switch (choice) {
+            case 1:
+                trip = "Lower Youghiogheny";
+                break;
+            case 2:
+                trip = "New";
+                break;
+            case 3:
+                trip = "Cheat";
+                break;
+            case 4:
+                trip = "Upper Youghiogheny";
+                break;
+            default:
+                std::cerr << "Error: Invalid choice. Please enter a number between 1 and 5." << std::endl;
+                continue;  // Restart the loop
+        }
+
+        getTripDetails(trip, gradient, raftClass);
+
+        // Display trip details
+        std::cout << "\nTrip: " << trip << std::endl;
+        std::cout << "Gradient: " << gradient << " feet per mile" << std::endl;
+        std::cout << "Class: " << raftClass << std::endl;
+    }
+
+    return 0;
+}
+
+
+Instead, vector containers may allocate some extra storage to accommodate for possible growth, and thus the container may have an actual capacity greater than the storage strictly needed to contain its elements (i.e., its size). Libraries can implement different strategies for growth to balance between memory usage and reallocations, but in any case, reallocations should only happen at logarithmically growing intervals of size so that the insertion of individual elements at the end of the vector can be provided with amortized constant time complexity (see push_back).
+
+EXAMPLE 3: Project #8.3: Your local painting supplies store would like a paint-mixing "expert system." Write a function that, given a non-primary color (i.e., orange, green, purple) will pass back the two primary colors that must be mixed to produce that color (i.e., red and yellow must be mixed to produce orange, yellow and blue to produce green, and blue and red to produce purple). Use a string object to store a color. Then write a menu-driven program that allows its user to enter, process and display the solution of as many paint-mixing problems as the user wishes
+
+#include <iostream>
+#include <string>
+
+// Function to determine the primary colors needed to produce a given non-primary color
+void mixColors(const std::string& nonPrimaryColor, std::string& primaryColor1, std::string& primaryColor2) {
+    if (nonPrimaryColor == "orange") {
+        primaryColor1 = "red";
+        primaryColor2 = "yellow";
+    } else if (nonPrimaryColor == "green") {
+        primaryColor1 = "yellow";
+        primaryColor2 = "blue";
+    } else if (nonPrimaryColor == "purple") {
+        primaryColor1 = "blue";
+        primaryColor2 = "red";
+    } else {
+        std::cerr << "Error: Invalid color entered. Not a non-primary color." << std::endl;
+        primaryColor1 = primaryColor2 = "Invalid";
+    }
+}
+
+int main() {
+    std::string nonPrimaryColor, primaryColor1, primaryColor2;
+
+    while (true) {
+        // Display menu
+        std::cout << "\nPaint-Mixing Expert System Menu:" << std::endl;
+        std::cout << "1. Mix Colors" << std::endl;
+        std::cout << "2. Exit" << std::endl;
+
+        // Get user input
+        std::cout << "Enter your choice (1 or 2): ";
+        int choice;
+        std::cin >> choice;
+
+        // Exit if the user chooses to exit
+        if (choice == 2) {
+            break;
+        }
+
+        // Get user input for non-primary color
+        std::cout << "Enter a non-primary color (orange, green, purple): ";
+        std::cin >> nonPrimaryColor;
+
+        // Process and display the solution
+        mixColors(nonPrimaryColor, primaryColor1, primaryColor2);
+
+        if (primaryColor1 != "Invalid" && primaryColor2 != "Invalid") {
+            std::cout << "To create " << nonPrimaryColor << ", mix " << primaryColor1 << " and " << primaryColor2 << std::endl;
+        }
+    }
+
+    return 0;
+}
+
+
+Therefore, compared to arrays, vectors consume more memory in exchange for the ability to manage storage and grow dynamically in an efficient way.
+
+SORT==> Project #8.2: Write a function Sort3() that, given three integer arguments int1, int2, and int3, changes the values of those arguments so that their values are in ascending order (i.e., int1 <= int2 <= int3---looks like a postcondition!). Write a driver program that demonstrates the correctness of Sort3().
+
+#include <iostream>
+
+// Function to sort three integer values in ascending order
+void Sort3(int& int1, int& int2, int& int3) {
+    if (int1 > int2) {
+        std::swap(int1, int2);
+    }
+    if (int2 > int3) {
+        std::swap(int2, int3);
+    }
+    if (int1 > int2) {
+        std::swap(int1, int2);
+    }
+}
+
+int main() {
+    // Demonstrate the correctness of Sort3()
+
+    // Case 1: Already sorted values
+    int a = 1, b = 2, c = 3;
+    std::cout << "Before sorting: " << a << ", " << b << ", " << c << std::endl;
+    Sort3(a, b, c);
+    std::cout << "After sorting: " << a << ", " << b << ", " << c << std::endl;
+
+    // Case 2: Random order
+    int x = 5, y = 3, z = 8;
+    std::cout << "\nBefore sorting: " << x << ", " << y << ", " << z << std::endl;
+    Sort3(x, y, z);
+    std::cout << "After sorting: " << x << ", " << y << ", " << z << std::endl;
+
+    // Case 3: Reverse order
+    int p = 10, q = 7, r = 3;
+    std::cout << "\nBefore sorting: " << p << ", " << q << ", " << r << std::endl;
+    Sort3(p, q, r);
+    std::cout << "After sorting: " << p << ", " << q << ", " << r << std::endl;
+
+    return 0;
+}
+
+
+Compared to the other dynamic sequence containers (deques, lists and forward_lists), vectors are very efficient accessing its elements (just like arrays) and relatively efficient adding or removing elements from its end. For operations that involve inserting or removing elements at positions other than the end, they perform worse than the others, and have less consistent iterators and references than lists and forward_lists.
+
+EXAMPLE 3 == > Project #8.4: A quadratic equation is an equation of the form
+ax2 + bx + c = 0
+Write a function that, given the a, b and c values defining a quadratic, passes back the two roots of that quadratic. To compute the roots, use the quadratic formula:
+ 
+        -b ± sqrt(b2 - 4ac)
+roots = --------------------------
+                 2a
+Your function should check for common errors, such as a == 0 and b2 - 4ac being negative.
+Create a user-friendly driver program that allows its user to compute the roots of an arbitrary number of quadratic equations.
+
+
+#include <iostream>
+#include <cmath>
+
+// Function to compute the roots of a quadratic equation
+void quadraticRoots(double a, double b, double c, double& root1, double& root2) {
+    if (a == 0) {
+        std::cerr << "Error: 'a' coefficient cannot be zero. Not a quadratic equation." << std::endl;
+        return;
+    }
+
+    double discriminant = b * b - 4 * a * c;
+
+    if (discriminant < 0) {
+        std::cerr << "Error: Discriminant is negative. No real roots." << std::endl;
+        return;
+    }
+
+    root1 = (-b + std::sqrt(discriminant)) / (2 * a);
+    root2 = (-b - std::sqrt(discriminant)) / (2 * a);
+}
+
+int main() {
+    char continueFlag;
+
+    do {
+        double a, b, c, root1, root2;
+
+        // Get coefficients from the user
+        std::cout << "Enter the coefficients of the quadratic equation (ax^2 + bx + c = 0):" << std::endl;
+        std::cout << "a: ";
+        std::cin >> a;
+        std::cout << "b: ";
+        std::cin >> b;
+        std::cout << "c: ";
+        std::cin >> c;
+
+        // Compute and display the roots
+        quadraticRoots(a, b, c, root1, root2);
+
+        if (!std::isnan(root1) && !std::isnan(root2)) {
+            std::cout << "Root 1: " << root1 << std::endl;
+            std::cout << "Root 2: " << root2 << std::endl;
+        }
+
+        std::cout << "Do you want to compute the roots of another quadratic equation? (y/n): ";
+        std::cin >> continueFlag;
+
+    } while (continueFlag == 'y' || continueFlag == 'Y');
+
+    return 0;
+}
