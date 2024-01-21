@@ -1,0 +1,54 @@
+Introduction
+We have seen that the C++ if statement uses a condition to selectively execute statements. In addition to facilitating selection, most modern programming languages also use conditions to permit statements to be executed repeatedly.
+
+A loop is categorized by when it evaluates its condition:
+
+A ---pretest loop evaluates its condition before its statements.
+A ---posttest loop evaluates its condition after its statements.
+An ---unrestricted loop evaluates its condition whenever you like.
+
+The other three C++ loops differ from the for loop in that they are ----general-purpose loops, designed for problems where the number of repetitions is not known in advance.
+
+The C++ while loop provides a ----general pretest loop.
+The C++ do loop provides a ---general posttest loop.
+The C++ forever loop provides a--- general unrestricted loop.
+
+We've looked at how conditions are used in if and for statements. The other loops work quite similar to the for loop. There are two types of conditions we have to work with.
+
+A ---continuation condition defines the circumstances under which we want repetition to continue. "When do I keep on going?"
+A ----termination condition defines the circumstances under which repetition should terminate. "When do I stop?"
+
+In C++, the ---post-test loop is called the do loop, and its pattern is as follows:
+
+do
+{
+  Statements
+}
+while ( Condition );
+When execution reaches such a loop, the following actions occur:
+Statements execute.
+Condition is evaluated.
+If Condition is true, control returns to step 1; otherwise, control proceeds to the next statement after the loop.
+
+Since its Condition is not evaluated until after the first execution of Statements, the do loop guarantees that Statements will be executed one or more times. For this reason, the do loop is said to exhibit one-trip behavior: we must make at least ----one trip through Statements.
+
+
+The C++ ---pretest loop is called the while loop:
+
+while ( Condition )
+  Statement
+As usual, Condition is any C++ Boolean expression, and Statement can be either a single or compound C++ statement. Statement is often referred to as the body of the loop.
+This works just like a do loop except that Condition is evaluated before the Statement is evaluated. If Condition is false right away, Statement is never executed. For this reason, a while loop is said to exhibit -----zero-trip behavior: we might make ---zero trips through Statement.
+
+Add a while loop to encode our modified algorithm. The condition !cin.good() can be used to control the while loop. Since the while loop must repeat multiple statements, its Statement must be a compound statement or bad things will result.
+
+In C++, the unrestricted loop is a simplification of the for loop that we call the ---forever loop, that has the following pattern:
+
+for (;;)
+{
+  StatementList1
+  if ( Condition ) break;
+  StatementList2
+}
+By leaving out the three expressions that normally control a for loop, it becomes an ----infinite loop.
+
