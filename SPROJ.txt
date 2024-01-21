@@ -151,54 +151,50 @@ int main() {
 
 PROJ SORTING
 
-
 #include <iostream>
-void bubbleSort(int arr[], int
-n) {
-for
-(int i = 0; i < n
-- 1; ++i) {
-for
-(int j = 0; j < n
-- i
-- 1; ++j) {
-if
-(arr[j] > arr[j + 1]) {
-int temp = arr[j];
-arr[j] = arr[j + 1];
-arr[j + 1] = temp;
+
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = 0; j < n - i - 1; ++j) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
 }
-}
-}
-}
+
 void printArray(int arr[], int size) {
-for
-(int i = 0; i < size; i++)
-std::cout << arr[i] << " "
-;
-std::cout << "\n"
-;
+    for (int i = 0; i < size; i++)
+        std::cout << arr[i] << " ";
+    std::cout << "\n";
 }
+
 int main() {
-int n;
-std::cout << "Dizinin boyutunu belirtin: "
-;
-std::cin >> n;
-int* arr = new int[n];
-std::cout << "Dizinin elemanlarını girin:\n"
-;
-for
-(int i = 0; i < n; ++i) {
-std::cout << "Eleman " << i + 1 << ": "
-;
-std::cin >> arr[i];
+    int n;
+
+    std::cout << "Dizinin boyutunu belirtin: ";
+    std::cin >> n;
+
+    int* arr = new int[n];
+
+    std::cout << "Dizinin elemanlarını girin:\n";
+    for (int i = 0; i < n; ++i) {
+        std::cout << "Eleman " << i + 1 << ": ";
+        std::cin >> arr[i];
+    }
+    
+    std::cout << "Dizinin orijinal hali: ";    
+    printArray(arr, n);
+
+    bubbleSort(arr, n);
+
+    std::cout << "Dizinin sıralı hali: ";
+    printArray(arr, n);
+
+    delete[] arr;
+
+    return 0;
 }
-std::cout << "Dizinin orijinal hali: ";
-printArray(arr, n);
-bubbleSort(arr, n);
-std::cout << "Dizinin sıralı hali: "
-;
-printArray(arr, n);
-delete[] arr;
-return 0;
-}
+
