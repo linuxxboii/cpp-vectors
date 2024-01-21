@@ -1,13 +1,13 @@
 Terminology
-A value parameter is a parameter whose Type is not followed by an ampersand (&). A value parameter is a variable that is local to the function; when the function is called, it receives a copy of the value of the corresponding argument.
-A reference parameter is parameter whose Type is followed by an ampersand (&). (Technically, the ampersand is part of the type.) A reference parameter is an alias (e.g., another name) for its corresponding argument.
+A ---value parameter is a parameter whose Type is not followed by an ampersand (&). A value parameter is a variable that is local to the function; when the function is called, it receives a copy of the value of the corresponding argument.
+A ----reference parameter is parameter whose Type is followed by an ampersand (&). (Technically, the ampersand is part of the type.) A reference parameter is an alias (e.g., another name) for its corresponding argument.
 
 
 The (Simplified) C++ Rules of Scope
 The basic rules governing the scope of C++ names can be summarized as follows:
 
-Local block scope. The scope of any name declared within a block starts at its declaration and ends at the close-brace (i.e., }) of the block. The variable is defined in any of the code that appears in the program text between its declaration and the closing brace (including nested compound statements). These variables are called "local" because they automatically come into existence whenever execution enters the surrounding braces.
-Local parameter scope. The scope of a parameter starts at its declaration and ends at the function's close brace. Parameters are also local because their scope covers only a local area of the code.
-for-loop scope. A variable declared in the initialization expression of a for loop is local to just the for loop.
-Non-local scope. There are many other types of scope that we'll just label as "non-local". In particular, the scope of a variable declared outside any curly-brace blocks lasts from the variable's declaration to the end of the file.
+---Local block scope. The scope of any name declared within a block starts at its declaration and ends at the close-brace (i.e., }) of the block. The variable is defined in any of the code that appears in the program text between its declaration and the closing brace (including nested compound statements). These variables are called "local" because they automatically come into existence whenever execution enters the surrounding braces.
+----Local parameter scope. The scope of a parameter starts at its declaration and ends at the function's close brace. Parameters are also local because their scope covers only a local area of the code.
+--- for-loop scope. A variable declared in the initialization expression of a for loop is local to just the for loop.
+----Non-local scope. There are many other types of scope that we'll just label as "non-local". In particular, the scope of a variable declared outside any curly-brace blocks lasts from the variable's declaration to the end of the file.
 
