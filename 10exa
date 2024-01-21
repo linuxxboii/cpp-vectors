@@ -1,0 +1,12 @@
+In past exercises, we have dealt with sequences of values by processing the values one at a time. Now we want to examine a new kind of object called a VECTOR that can store not just one value, but an entire sequence of values. Like a string, a vector is a *subscripted object, meaning the values within it can be accessed via a *subscript or *index:
+
+The components or "spaces" within a vector in which values can be stored are called the vector's *elements. Unlike strings which only store chars, vectors can be used to store any type of data.
+
+By storing a sequence of values in a vector, we can design operations for the sequence, and then implement such operations in a function that receives the entire sequence through a vector parameter.
+
+Vectors are implemented for us in C++ as the vector class in the vector library which is part of the C++ **Standard Template Library (STL). The STL contains many containers and algorithms that are useful in many different situations. We'll only explore a very small portion of the STL in this lab.
+
+The vector class is known as a **template class; that is, it's be templated to allow us to specify the Type of data that is stored in each vector.. A complete discussion of templates and template classes is beyond us at this point, but for now it suffices to know why and how to use them.
+
+Some of the vector methods and each of the STL algorithms make use of a new kind of object called an ***iterator. An iterator is an object that can move through a sequence of values and access each of the values in turn. Each of the containers in STL provide iterators for processing their elements, and each of the STL algorithms take a container's iterators as arguments, which they use to access the elements in that container.
+
