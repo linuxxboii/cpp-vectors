@@ -1,0 +1,2 @@
+a converter is given an object of one time and produces an object as another type.
+accessor and constructor methods.
